@@ -1,12 +1,17 @@
 FROM ubuntu:latest
 
+WORKDIR /app
+
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip && \
-    pip3 install flask
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip
 
-COPY ./api.py /app/api.py
+RUN rm /usr/lib/python*/EXTERNALLY-MANAGED
+
+RUN pip3 install flask
+
+COPY ./app/api.py /app/api.py
 
 EXPOSE 5252
 
-CMD ["echo", "Hello, World!"]
+CMD ["python3", "api.py"]
