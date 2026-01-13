@@ -1,0 +1,16 @@
+services:
+  back-end:
+    build: ./back-end
+
+  front-end:
+    build: ./front-end
+    depends_on:
+      - back-end
+
+  proxy:
+    build: ./proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - front-end
+      - back-end
